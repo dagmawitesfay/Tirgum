@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const connectDB = require("./config/database")
+const mainRoutes = require("./routes/main");
 
 
 //Use .env file in config folder
@@ -22,11 +23,9 @@ app.use(express.json());
 //Logging
 // app.use(logger("dev"));
 
+app.use("/", mainRoutes);
+
 //Server Running
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");
 });
-
-app.get("/",async(req,res)=>{
-    res.send("HI")
-})
