@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tirgum · Official letters explained in your language</title>
+  <link rel="icon" href="/images/tirgum-icon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=Noto+Sans+Ethiopic:wght@400;500&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<%
+// Format Date in Oct 26 2026 format
+const formatDate = (date) => new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+});
+
+// Deadline is calculated by difference between the deadline and todays date
+ const daysLeft = (date) =>
+    Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24));
+%>
+<body class="bg-[#F2F8F7] text-[#0B4F4A] font-['Inter_Tight','Noto_Sans_Ethiopic',sans-serif]">
+      <header class="flex items-center justify-around gap-5 p-2.5 bg-white border-b border-[#e6e6e6]">
+    <a href="">
+      <img src="/images/tirgum-logo.svg" alt="Tirgum" class="h-11 w-auto">
+    </a>
+        <nav>
+            <div class="flex gap-2">
+                <button>EN</button>
+                <button>አማርኛ</button>
+                <button>ES</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 pb-16">
+
+      <a class="inline-flex items-center gap-2 mt-6 text-sm text-[#0B4F4A] no-underline hover:underline" href="/dashboard">
+        <span aria-hidden="true">&larr;</span> Back to my letters
+      </a>
+
+      <!-- Title, category/urgency tags, sender + date -->
+      <section class="mt-6">
+        <h1 class="text-[28px] md:text-5xl leading-tight tracking-[-0.03em] text-[#0B4F4A] font-medium"><%= detail.title %></h1>
+
+        <div class="flex flex-wrap items-center gap-3 mt-4">
+          <span class="px-4 py-1.5 rounded-full bg-white border border-[#DCE5E3] text-sm capitalize text-[#0B4F4A]"><%= detail.category %></span>
+          <% if (detail.urgency === "urgent") { %>
+            <span class="px-4 py-1.5 rounded-full bg-[#FDECEA] text-sm capitalize text-[#89202b]">Urgent</span>
+          <% } else if (detail.urgency === "soon") { %>
+            <span class="px-4 py-1.5 rounded-full bg-[#FFF4DB] text-sm capitalize text-[#8A5A00]"> Soon</span>
+          <% } else { %>
+            <span class="px-4 py-1.5 rounded-full bg-[#E6F2EF] text-sm text-[#0B4F4A]"> No rush</span>
+          <% } %>
+        </div>
+
+        <p class="mt-3 text-sm text-[#5A716E]">
+          From <%= detail.sender %> Uploaded <%= formatDate(detail.createdAt) %>
+        </p>
+      </section>
+
+      <!-- Summary and Deadline -->
+      <section class="mt-8 grid gap-5 md:grid-cols-[1fr_340px] items-stretch">
+
+        <!-- Summary -->
+        <div class="bg-white border border-[#DCE5E3] rounded-3xl p-8">
+          <span class="block text-xs tracking-[0.15em] uppercase text-[#0B6B63]">What this letter means</span>
+          <p class="mt-5 text-xl leading-relaxed text-[#24403D]"><%= detail.summary %></p>
+        </div>
+
+        <!-- Deadline -->
+        <div class="bg-[#FFF8F7] border border-[#F3CFCB] rounded-3xl p-6">
+          <span class="block text-sm font-medium text-[#B42318]">Deadline</span>
+
+          <% if (detail.deadline) { %>
+            <% if (daysLeft(detail.deadline) < 0) { %>
+              <h4 class="mt-3 text-4xl font-medium text-[#B42318]">Deadline passed</h4>
+            <% } else { %>
+              <h4 class="mt-3 text-5xl font-medium text-[#B42318]"><%= daysLeft(detail.deadline) %> days <span class="text-base font-normal text-[#5A716E]">left</span></h4>
+            <% } %>
+            <div class="mt-4 pt-4 border-t border-[#F3CFCB]">
+              <h5 class="font-semibold text-[#0B4F4A]"><%= formatDate(detail.deadline) %></h5>
+              <p class="mt-1 text-sm text-[#24403D]"><%= detail.consequence %></p>
+            </div>
+          <% } else { %>
+            <h4 class="mt-3 text-3xl font-medium text-[#0B4F4A]">No deadline</h4>
+            <div class="mt-4 pt-4 border-t border-[#F3CFCB]">
+              <p class="text-sm text-[#24403D]"><%= detail.deadlineNote || detail.consequence %></p>
+            </div>
+          <% } %>
+        </div>
+
+      </section>
+
+      <!-- What to do next section -->
+       <% const doneCount = detail.steps.filter((s) => s.done).length %>
+       <section id="steps" class="mt-5 bg-white border border-[#DCE5E3] rounded-3xl p-8">
+        <div class="flex justify-between">
+          <h2>What to do next</h2>
+          <p><span id="done-count"><%= doneCount %></span> of <%= detail.steps.length %> done</p>
+        </div>
+
+        <% detail.steps.forEach((step, index) => { %>
+          <div class="flex items-center gap-3 mt-3">
+            <input class="peer" type="checkbox" id="step-<%= index %>" name="nextStep" <%= step.done ? "checked" : "" %>>
+            <label for="step-<%= index %>" class="peer-checked:line-through peer-checked:text-gray-400"><%= step.text %></label>
+          </div>
+        <% }) %>
+       </section>
+
+       <!-- Key Terms -->
+        <section class="mt-5 bg-white border border-[#DCE5E3] rounded-3xl p-8">
+        <h3>Key Terms</h3>
+        <span><%= detail.keyTerms.length %> words explained</span>
+      <div class="mt-4 pt-4 border-t border-[#DCE5E3]">
+        <% detail.keyTerms.forEach((terms) => { %>
+      <div class="mt-3">
+        <h4 class="text-[#0B4F4A] mb-1 font-bold"><%= terms.term %></h4>
+        <p><%= terms.meaning %></p>
+      </div>
+    <% }) %>
+      </div>
+  </section>
+
+    </main>
+
+<!-- <script>
+  // Update "X of Y done" live whenever a checkbox is toggled
+  const boxes = document.querySelectorAll('#steps input[type="checkbox"]');
+  const counter = document.getElementById("done-count");
+
+  function updateCount() {
+    counter.textContent = document.querySelectorAll('#steps input[type="checkbox"]:checked').length;
+  }
+
+  boxes.forEach((box) => box.addEventListener("change", updateCount));
+</script> -->
+</body>
+</html>

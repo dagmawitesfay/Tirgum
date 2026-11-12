@@ -40,10 +40,13 @@ const LetterSchema = new mongoose.Schema({
     type : String,
     required: true
   } , 
-  steps: [{
-    text: { type: String, required: true },
-    done: { type: Boolean, default: false }
-  }],
+  steps: {
+    type: [{
+      text: { type: String, required: true },
+      done: { type: Boolean, default: false }
+    }],
+    required: true
+  },
   language: {
     type: String,
     enum : ["en","am","es"] , default : "en"
