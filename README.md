@@ -4,7 +4,7 @@ Tirgum is a letter-organizing app. The current version includes a dashboard that
 
 ## Dashboard mockup
 
-![Tirgum dashboard mockup](public/imgs/tirgum-dashboard-mockup.png)
+![Tirgum dashboard mockup](public/images/tirgum-landing-hero.png)
 
 ## Current status
 
