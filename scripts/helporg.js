@@ -261,7 +261,6 @@ const helpOrginzationData = [
   // ──────────────────────── BENEFITS ────────────────────────
 
   // Source: finditcambridge.org CEOC program pages (public benefits, health insurance, housing).
-  // Hours: the pages say "Monday through Friday" with no times. Staff speak Amharic and Tigrinya.
   {
     organizationName: "Cambridge Economic Opportunity Committee (CEOC)",
     category: "Benefits",
@@ -318,7 +317,6 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: bostonabcd.org contact page, "Meet ABCD" (July 2024), ABCD Connect flyer (2023),
 
   {
     organizationName: "ABCD (Action for Boston Community Development)",
@@ -352,7 +350,6 @@ const helpOrginzationData = [
 
   // ───────────────────────── HOUSING ─────────────────────────
 
-  // Source: metrohousingboston.org/contact. Languages and cost: NOT LISTED on that page.
   {
     organizationName: "Metro Housing|Boston",
     category: "Housing",
@@ -385,7 +382,7 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: boston.gov/housing-stability (City of Boston). Languages and cost: NOT LISTED on that page.
+
   {
     organizationName: "City of Boston: Office of Housing Stability",
     category: "Housing",

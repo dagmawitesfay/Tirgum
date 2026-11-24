@@ -9,6 +9,11 @@ const LetterSchema = new mongoose.Schema({
     lowercase : true,
     trim : true
   },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   sender: {
     type: String,
     required : true ,
