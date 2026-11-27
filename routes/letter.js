@@ -6,14 +6,15 @@ const upload = require("../middleware/multer")
 const router = express.Router();
 
 router.get("/dashboard", ensureAuth, letterController.dashboard);
-router.get("/letters/:id" , ensureAuth, detailController.getLetterDetail)
 router.get("/letters/new", ensureAuth, (req, res) => res.render("uploadLetter"));
+router.get("/letters/:id" , ensureAuth, detailController.getLetterDetail)
+
 // Multer errors (file too large / wrong type) are returned as JSON for the upload page
 const handleUpload = (req, res, next) => {
   upload.single("document")(req, res, (err) => {
     if (err) {
       const error = err.code === "LIMIT_FILE_SIZE" ? "too-large" : "unsupported-file";
-      return res.status(400).json({ error });
+      return res.status(400).render("uploadLetter", { error });
     }
     next();
   });

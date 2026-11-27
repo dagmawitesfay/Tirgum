@@ -1,5 +1,8 @@
+
 const { GoogleGenAI } = require("@google/genai")
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({
+  httpOptions:{timeout:60000} // server doesnt have to wait for long time
+});
 
 
 // Define the Same Schema Letter Model expects
@@ -26,39 +29,37 @@ const letterSchema = {
         steps: { 
         type: "ARRAY", // [{},{},{}]
         items:{ // each items in the list
+        type:"OBJECT" ,
         properties: { // fields of the object
         text: { type: "STRING"},
-        done: { type: "BOOLEAN"}
+  
         },
         required:["text"]
     }
         },
-          language: {
-          type: "STRING",
-          enum : ["en","am","es"] , default : "en",
-          description: "Language code of the explanation you write (the language the user requested)",    
-  },
       keyTerms: {
       type: "ARRAY",
       items:{
+      type:"OBJECT" , 
       properties: {
       term: { type: "STRING" },
-      meaning: { type: "STRING "}
+      meaning: { type: "STRING"}
         },
         required:["term","meaning"]
       }
      
       }
       },
-      required: ["title","readable", "sender" , "urgency", "category","summary","consequence","steps","keyTerms"],
+      required: ["title","readable", "sender" , "deadline", "deadlineNote",  "urgency", "category","summary","consequence","steps","keyTerms"],
     }
 
 
 
 // detailed prompt matching schema 
-function buildPrompt(lang){
+function buildPrompt(lang,todaysDate){
  const languages = { en: "English", am: "Amharic", es: "Spanish" };
  return `
+Today's date is ${todaysDate}
 You are an assistant that helps immigrants and people with limited English
 understand official letters (government, healthcare, housing, school, benefits).
 Write the explanation in ${languages[lang] || "English"}.
@@ -82,11 +83,9 @@ Fields:
 - consequence: What happens if the reader does nothing or misses the deadline.
     If the letter does not say, state "The letter does not mention a consequence."
 - steps: Ordered list of concrete actions the reader should take. Each item is an
-    object { "text": "<one short action starting with a verb>", "done": false }.
-    Always set "done" to false. If no action is needed, return one step
+    object { "text": "<one short action starting with a verb>"}.
+  If no action is needed, return one step
     such as "No action needed. Keep this letter for your records."
-- language: Language of the letter's original text: "en" (English),
-    "am" (Amharic) or "es" (Spanish). Default to "en" if unsure.
 - keyTerms: Up to 6 difficult words, legal terms or acronyms found in the letter.
     Each item is { "term": "<term as written>", "meaning": "<plain-language definition>" }.
 - readable: true or false, as described in the rules
@@ -94,11 +93,10 @@ Fields:
 Rules:
 - Use only information that is in the document. If something is missing, use null
   (for optional fields) rather than guessing.
+- if writing in Amharic, keep the names of organization,programs
 - Write summary, consequence, steps and keyTerms meanings in simple, clear,
   non-technical language.
-- Keep names, dates, amounts and reference numbers exactly as written.
-  - Set "readable" to true only if the document is an official letter, notice or
-  form that contains information the reader may need to act on.
+- Never include case numbers, receipt numbers, Social Security numbers, A-numbers, account or member ID numbers, dates of birth, home addresses, or the recipient's name.
 - Set "readable" to false if the image is blurry or cut off, the text cannot be
   read, or the document is not a letter (for example a photo of a person, a
   menu, a receipt or a blank page).
@@ -113,17 +111,17 @@ async function analyzeLetter(file,lang){
 
    // call gemini with model and contents  
    const generateOutput = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-3.8-flash",
      contents: [
-       { text : buildPrompt(lang)} , 
-        {inlineData: {
+      {inlineData: {
       data :  file.buffer.toString("base64") , // convert it to base 64 format
       mimeType: file.mimetype} 
-    }
+    } , 
+    { text : buildPrompt(lang,new Date().toISOString().slice(0,10))} ,  // date format as 2026-11-27 , 
       ] ,
       config : {
         responseMimeType : "application/json", // confirms to json schema
-        responseJsonSchema: letterSchema // gemini structures the output in Letter Schema
+        responseSchema: letterSchema // gemini structures the output in Letter Schema
       }
    })
 

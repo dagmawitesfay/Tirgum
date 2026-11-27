@@ -110,8 +110,6 @@ const helpOrginzationData = [
 
   // ─────────────────────── IMMIGRATION ───────────────────────
 
-  // Source: immigrationadvocates.org directory listing and disabilityinfo.org record.
-  // Hours: NOT LISTED in either source.
   {
     organizationName: "PAIR Project (Political Asylum/Immigration Representation Project)",
     category: "Immigration",
@@ -142,8 +140,7 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: miracoalition.org/citizenship, miracoalition.org/contact, and the immigrationadvocates.org listing.
-  // Hours: NOT LISTED.
+
   {
     organizationName: "MIRA Coalition (Massachusetts Immigrant and Refugee Advocacy Coalition)",
     category: "Immigration",
@@ -171,7 +168,6 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: ccab.org/locations (address, phone) and the immigrationadvocates.org listing (languages, fees, services).
   {
     organizationName: "Catholic Charities Boston: Refugee and Immigrant Services",
     category: "Immigration",
@@ -203,7 +199,6 @@ const helpOrginzationData = [
   },
 
   // ───────────────────────── HEALTH ─────────────────────────
-  // Source: hcfama.org/hcfas-helpline and hcfama.org/contact-us.
 
   {
     organizationName: "Health Care For All: HelpLine",
@@ -230,8 +225,6 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: boston.gov/mayors-health-line (Boston Public Health Commission).
-  // The page says the service is multilingual but does not name the languages.
   {
     organizationName: "Mayor's Health Line (Boston Public Health Commission)",
     category: "Health",
@@ -260,7 +253,6 @@ const helpOrginzationData = [
 
   // ──────────────────────── BENEFITS ────────────────────────
 
-  // Source: finditcambridge.org CEOC program pages (public benefits, health insurance, housing).
   {
     organizationName: "Cambridge Economic Opportunity Committee (CEOC)",
     category: "Benefits",
@@ -288,7 +280,6 @@ const helpOrginzationData = [
     ],
   },
 
-  // Source: projectbread.org/foodsource-hotline.
   {
     organizationName: "Project Bread: FoodSource Hotline",
     category: "Benefits",
@@ -316,7 +307,6 @@ const helpOrginzationData = [
       "Using HIP benefits for farm fresh produce",
     ],
   },
-
 
   {
     organizationName: "ABCD (Action for Boston Community Development)",
@@ -348,7 +338,7 @@ const helpOrginzationData = [
     ],
   },
 
-  // ───────────────────────── HOUSING ─────────────────────────
+
 
   {
     organizationName: "Metro Housing|Boston",
