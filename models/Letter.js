@@ -6,7 +6,6 @@ const LetterSchema = new mongoose.Schema({
   title: {
     type: String,
     required : true,
-    lowercase : true,
     trim : true
   },
   user_id: {
@@ -17,7 +16,6 @@ const LetterSchema = new mongoose.Schema({
   sender: {
     type: String,
     required : true ,
-    lowercase : true,
     trim : true
   },
    urgency: {
