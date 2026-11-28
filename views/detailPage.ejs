@@ -31,12 +31,15 @@ const formatDate = (date) => new Date(date).toLocaleDateString("en-US", {
     <a href="">
       <img src="/images/tirgum-logo.svg" alt="Tirgum" class="h-11 w-auto">
     </a>
-        <nav>
+        <nav class="flex items-center gap-5">
             <div class="flex gap-2">
                 <button>EN</button>
                 <button>አማርኛ</button>
                 <button>ES</button>
             </div>
+            <form action="/logout" method="POST" class="inline">
+                <button type="submit" class="font-medium hover:underline">Log out</button>
+            </form>
         </nav>
     </header>
 

@@ -1,40 +1,60 @@
-<%- include('partials/header') -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in · Tirgum</title>
+  <link rel="icon" href="/images/tirgum-icon.svg" type="image/svg+xml">
 
-<main class="container">
-  <div class="row justify-content-center">
-    <section class="col-6 mt-5">
-      <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
-      <div class="alert alert-danger"><%= el.msg %></div>
-      <% }) %> <% } %> <% if (locals.messages.info) { %> <%
-      messages.info.forEach( el => { %>
-      <div class="alert alert-info"><%= el.msg %></div>
-      <% }) %> <% } %>
-      <form action="/login" method="POST">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Email address</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            name="email"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-            name="password"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </section>
-  </div>
-</main>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=Noto+Sans+Ethiopic:wght@400;500&display=swap" rel="stylesheet">
 
-<%- include('partials/footer') -%>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-[#F2F8F7] text-[#0B4F4A] font-['Inter_Tight','Noto_Sans_Ethiopic',sans-serif]">
+
+  <main>
+    <div class="flex justify-around gap-8 items-start p-10 mx-auto">
+      <section class="w-full flex flex-col items-center">
+        <% if (locals.messages && messages.errors) { %>
+          <% messages.errors.forEach(el => { %>
+            <div class="w-full max-w-[420px] px-4 py-3 mb-4 border border-[#b42318] rounded-lg bg-[#fef3f2] text-[#b42318]">
+              <p class="m-0 text-sm leading-normal"><%= el.msg %></p>
+            </div>
+          <% }) %>
+        <% } %>
+        <% if (locals.messages && messages.info) { %>
+          <% messages.info.forEach(el => { %>
+            <div class="w-full max-w-[420px] px-4 py-3 mb-4 border border-[#b42318] rounded-lg bg-[#fef3f2] text-[#b42318]">
+              <p class="m-0 text-sm leading-normal"><%= el.msg %></p>
+            </div>
+          <% }) %>
+        <% } %>
+
+        <form action="/login" method="POST" class="w-full max-w-[420px] bg-white border border-[#dfe5e3] rounded-[28px] p-8">
+          <h1 class="m-0 text-[40px] leading-[1.1] font-medium tracking-[-0.04em] text-[#0B4F4A]">Welcome <em class="font-['Instrument_Serif',Georgia,serif] italic font-normal">back</em></h1>
+          <p class="mt-2 mb-8 text-base text-[#5f7370]">Log in to see your letters</p>
+
+          <div class="grid gap-2 mb-5">
+            <label for="email" class="text-[15px] font-medium text-[#0B4F4A]">Email address</label>
+            <input type="email" id="email" name="email"
+                   class="w-full px-4 py-3.5 border border-[#d5dcda] rounded-xl text-base text-[#0B4F4A] bg-white focus:outline-none focus:border-[#2F7A6F]">
+          </div>
+
+          <div class="grid gap-2 mb-5">
+            <label for="password" class="text-[15px] font-medium text-[#0B4F4A]">Password</label>
+            <input type="password" id="password" name="password"
+                   class="w-full px-4 py-3.5 border border-[#d5dcda] rounded-xl text-base text-[#0B4F4A] bg-white focus:outline-none focus:border-[#2F7A6F]">
+          </div>
+
+          <section class="mt-6">
+            <button type="submit" class="w-full px-6 py-3.5 rounded-full bg-[#0B4F4A] text-white text-base font-medium cursor-pointer hover:brightness-110">Log in</button>
+          </section>
+        </form>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

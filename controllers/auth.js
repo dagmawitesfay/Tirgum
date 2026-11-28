@@ -55,7 +55,7 @@ exports.logout = (req, res, next) => {
 
 exports.getSignup = (req, res) => {
   if (req.user) {
-    return res.redirect("/profile");
+    return res.redirect("/dashboard");
   }
   res.render("signup", {
     title: "Create Account",
@@ -75,7 +75,7 @@ exports.postSignup =  async(req, res, next) => {
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
-    return res.redirect("../signup");
+    return res.redirect("/signup");
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,

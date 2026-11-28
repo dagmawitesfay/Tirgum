@@ -25,12 +25,15 @@ const formatDate = (date) => new Date(date).toLocaleDateString("en-US", {
     <a href="/">
       <img src="/images/tirgum-logo.svg" alt="Tirgum" class="h-11 w-auto">
     </a>
-        <nav>
+        <nav class="flex items-center gap-5">
             <div class="flex gap-2">
                 <button>EN</button>
                 <button>አማርኛ</button>
                 <button>ES</button>
             </div>
+            <form action="/logout" method="POST" class="inline">
+                <button type="submit" class="font-medium hover:underline">Log out</button>
+            </form>
         </nav>
     </header>
 
@@ -43,7 +46,7 @@ const formatDate = (date) => new Date(date).toLocaleDateString("en-US", {
             </div>
 
             <a href="/upload-page">
-            <button class="inline-block px-6 py-3 rounded-full bg-[#F2A541] text-[#0B4F4A] font-medium no-underline hover:brightness-95"> Upload a letter
+            <button class="inline-block px-6 py-3 rounded-full bg-[#F2A541] text-[#0B4F4A] font-medium"> Upload a letter
             </button>
             </a>
         </section>

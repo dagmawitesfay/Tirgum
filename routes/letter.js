@@ -9,7 +9,7 @@ router.get("/dashboard", ensureAuth, letterController.dashboard);
 router.get("/letters/new", ensureAuth, (req, res) => res.render("uploadLetter"));
 router.get("/letters/:id" , ensureAuth, detailController.getLetterDetail)
 
-// Multer errors (file too large / wrong type) are returned as JSON for the upload page
+
 const handleUpload = (req, res, next) => {
   upload.single("document")(req, res, (err) => {
     if (err) {
